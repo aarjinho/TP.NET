@@ -14,7 +14,11 @@ namespace ASP.Server
         {
             // Rajouter autant de ligne ici que vous avez de mapping Model <-> DTO
             // https://docs.automapper.org/en/latest/
-            CreateMap<Book, BookDto>();
+            //CreateMap<Book, BookDto>();
+            CreateMap<Book, BookDto>()
+                .ForMember(dest => dest.Genres, opt => opt.MapFrom(src => src.Genres.Select(g => g.Name)));
+
+            CreateMap<Genre, GenreDto>();
         }
     }
 }
