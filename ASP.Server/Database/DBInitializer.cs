@@ -13,29 +13,55 @@ namespace ASP.Server.Database
     {
         public static void Initialize(LibraryDbContext bookDbContext)
         {
-
             if (bookDbContext.Books.Any())
                 return;
 
-            Genre SF, Classic, Romance, Thriller;
-            bookDbContext.Genre.AddRange(
-                SF = new Genre(),
-                Classic = new Genre(),
-                Romance = new Genre(),
-                Thriller = new Genre()
-            );
+            // Genres
+            var genres = new List<Genre>
+            {
+                new Genre { Name = "Science Fiction" },
+                new Genre { Name = "Classic" },
+                new Genre { Name = "Romance" },
+                new Genre { Name = "Thriller" }
+            };
+            bookDbContext.Genre.AddRange(genres);
             bookDbContext.SaveChanges();
 
-            // Une fois les moèles complété Vous pouvez faire directement
-            // new Book() { Author = "xxx", Name = "yyy", Price = n.nnf, Content = "ccc", Genres = new() { Romance, Thriller } }
-            bookDbContext.Books.AddRange(
-                new Book() { },
-                new Book() { },
-                new Book() { },
-                new Book() { }
-            );
-            // Vous pouvez initialiser la BDD ici
+            // Authors are associated with Books, so no need to add them separately
 
+            // Books
+            var books = new List<Book>
+            {
+                new Book
+                {
+                    Authors = new List<Author> { new Author { Name = "Auteur1" } },
+                    Title = "Livre1",
+                    Content = "contenu1",
+                    Genres = new List<Genre> { genres[2], genres[3] }
+                },
+                new Book
+                {
+                    Authors = new List<Author> { new Author { Name = "Victor Hugo" }, new Author { Name = "Shakespeare" } },
+                    Title = "Livre2",
+                    Content = "contenu2",
+                    Genres = new List<Genre> { genres[0] }
+                },
+                new Book
+                {
+                    Authors = new List<Author> { new Author { Name = "Auteur4" }, new Author { Name = "Auteur5" } },
+                    Title = "Livre3",
+                    Content = "contenu3",
+                    Genres = new List<Genre> { genres[1], genres[3] }
+                },
+                new Book
+                {
+                    Authors = new List<Author> { new Author { Name = "Auteur1" }, new Author { Name = "Auteur5" } },
+                    Title = "Livre4",
+                    Content = "contenu4",
+                    Genres = new List<Genre> { genres[0] }
+                }
+            };
+            bookDbContext.Books.AddRange(books);
             bookDbContext.SaveChanges();
         }
     }

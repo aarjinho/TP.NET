@@ -13,19 +13,16 @@ namespace ASP.Server.Models
         public int Id { get; set; }
         
         [Required]
-        public String Name { get; set; }
+        public string Title { get; set; }
         
-        [Required]
-        public string Author { get; set; }
+        public IEnumerable<Author> Authors { get; set; }
 
-        [Required]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        [Required]
         public string Content { get; set; }
 
-        public virtual ICollection<Genre> Genres { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
 
         // Mettez ici les propriété de votre livre: Nom, Autheur, Prix, Contenu et Genres associés
         // N'oublier pas qu'un livre peut avoir plusieur genres
